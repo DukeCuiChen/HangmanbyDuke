@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+	android:background="@drawable/hm_background">
+
+
+    <LinearLayout
+        android:id="@+id/parent_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+                
+        <LinearLayout
+            android:id="@+id/top_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/win_loss_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/total"
+                    style="@style/shadowedText"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:text="@string/total"
+                    android:textColor="@color/light_green" />
+
+                <TextView
+                	android:id="@+id/tried"
+                	style="@style/shadowedText"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="55dp"
+                    android:text="@string/tried"
+                    android:textColor="@color/light_green"/>
+                
+				<TextView
+                	android:id="@+id/score"
+                	style="@style/shadowedText"
+					android:layout_centerHorizontal="true"
+                    android:layout_alignTop="@+id/total"
+                    android:text="@string/score"
+                    android:textSize="25sp"
+                    android:textColor="@color/light_green"/>
+                
+				<TextView
+                	android:id="@+id/scorenum"
+                	style="@style/shadowedText"
+					android:layout_below="@+id/score"
+                    android:layout_centerHorizontal="true"
+                    android:text="0"
+                    android:textSize="25sp"
+                    android:textColor="@color/light_green"/>
+                
+				<TextView
+                	android:id="@+id/rest"
+                	style="@style/shadowedText"
+                    android:layout_alignLeft="@+id/tried"
+                    android:layout_below="@+id/tried"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/rest"
+                    android:textColor="@color/light_green"/>
+				<TextView
+                	android:id="@+id/correct"
+                	style="@style/shadowedText"
+                    android:layout_alignLeft="@+id/total"
+                    android:layout_below="@+id/total"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="55dp"
+                    android:text="@string/correct"
+                    android:textColor="@color/light_green"/>
+            </RelativeLayout>
+		<ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:background="@drawable/hangmanbilde0" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="4"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:textAlignment="center" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/keyboard_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="3"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp" >
+
+            <LinearLayout
+                android:id="@+id/llTopKeyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMidKeyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBotKeyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal" >
+            </LinearLayout>
+
+            <RelativeLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal" >
+                
+				<Button 
+			        android:id="@+id/replay"
+			        android:layout_width="110dp"
+			        android:layout_height="wrap_content"
+			        android:layout_toLeftOf="@+id/bottomcenter"
+			        android:layout_marginLeft="10dp"
+			        android:text="@string/replay"
+			        android:textColor="@color/dark_blue"
+			        android:background="@drawable/button_green_state"
+			        android:onClick="rePlay"/>
+				
+				<LinearLayout
+				    android:id="@+id/bottomcenter"
+				    android:layout_width="1dp"
+				    android:layout_height="1dp"
+				    android:layout_centerInParent="true"
+				    android:orientation="horizontal"/>
+				
+				<Button 
+			        android:id="@+id/submit"
+			        android:layout_width="110dp"
+			        android:layout_height="wrap_content"
+			        android:layout_toRightOf="@+id/bottomcenter"
+			        android:layout_marginRight="10dp"
+			        android:text="@string/submit"
+			        android:textColor="@color/dark_blue"
+			        android:background="@drawable/button_green_state"
+			        android:onClick="submit"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>

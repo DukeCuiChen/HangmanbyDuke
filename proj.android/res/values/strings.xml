@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">HangmanbyDuke</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="play">Play</string>
+    <string name="total">Total</string>
+    <string name="tried">Try</string>
+    <string name="rest">Rest</string>
+    <string name="correct">Correct</string>
+    <string name="score">Score</string>
+    
+    <string name="replay">Replay</string>
+    <string name="submit">Submit</string>
+	
+    <string name="keyboard">qwertyuiopasdfghjklzxcvbnm</string>
+    
+</resources>

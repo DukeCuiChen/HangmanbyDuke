@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+  	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal" 
+    android:orientation="vertical" 
+    android:background="@drawable/hm_background" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    <ImageView 
+        android:background="@drawable/hm_title" 
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" 
+        android:layout_marginTop="20dp" />
+    
+    <ImageView 
+        android:layout_width="wrap_content" 
+        android:layout_height="190dp" 
+        android:layout_marginBottom="30dp" 
+        android:src="@drawable/hangmanbilde7" />
+    
+    <Button 
+        android:id="@+id/start"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="@string/play"
+        android:textColor="@color/dark_blue"
+        android:background="@drawable/button_green_state"
+        android:onClick="goToGame"/>
+</LinearLayout>
