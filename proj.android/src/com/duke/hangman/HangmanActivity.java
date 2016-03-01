@@ -226,24 +226,13 @@ public class HangmanActivity extends Activity {
 										hangedMan.setBackgroundResource(getResources().getIdentifier("hangmanbilde" + (10-restTime), "drawable", getPackageName()));
 									}
 							        
-							        if (restTime == 0) {
-							        	for(Button button:invisib){
-							        		button.setEnabled(true);
-							        		button.setTextColor(getResources().getColor(R.color.black));
-							        	}
-							        	hangedMan.setBackgroundResource(getResources().getIdentifier("hangmanbilde" + 0, "drawable", getPackageName()));
-							        	getANewWord();
-										
-									}
-							        
-							        if(isComplete){
+							        if(isComplete || restTime == 0){
 							        	getResult();
 							        	for(Button button:invisib){
 							        		button.setEnabled(true);
 							        		button.setTextColor(getResources().getColor(R.color.black));
 							        	}
 							        	hangedMan.setBackgroundResource(getResources().getIdentifier("hangmanbilde" + 0, "drawable", getPackageName()));
-							        	getANewWord();
 							        }
 
 								}
@@ -284,6 +273,7 @@ public class HangmanActivity extends Activity {
 								public void run() {
 									correctText.setText(getResources().getString(R.string.correct) + ":" + correctWordCount);
 									scoreText.setText(score);
+									getANewWord();
 								}
 							});
 						}
