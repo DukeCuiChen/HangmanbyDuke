@@ -32,11 +32,10 @@ public class HangmanActivity extends Activity {
 
     private LinearLayout letterHolder;
 	private String sessionId;
-	private int totalWord, restTime;
+	private int totalWord, restTime, totalTime;
 	private int triedWord;
+	private int countlast,countnow;
 	
-	private static boolean letterIsR;
-	private boolean isComplete;
 	
 	private TextView totalText, triedText, restText, correctText, scoreText;
 	private ImageView hangedMan;
@@ -59,7 +58,7 @@ public class HangmanActivity extends Activity {
 				sessionId = resultJson.optString("sessionId");
 				JSONObject data = resultJson.optJSONObject("data");
 				totalWord = data.optInt("numberOfWordsToGuess");
-				restTime = data.optInt("numberOfGuessAllowedForEachWord");
+				totalTime = data.optInt("numberOfGuessAllowedForEachWord");
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -70,8 +69,6 @@ public class HangmanActivity extends Activity {
 		buttonGenerator();
 		
 		getANewWord();
-
-		
 		
 	}
 	
@@ -87,7 +84,7 @@ public class HangmanActivity extends Activity {
 		
         hangedMan.setBackgroundResource(getResources().getIdentifier("hangmanbilde" + 0, "drawable", getPackageName()));
 		totalText.setText(getResources().getString(R.string.total) + ":" + totalWord);
-		restText.setText(getResources().getString(R.string.rest) + ":" + restTime);
+		restText.setText(getResources().getString(R.string.rest) + ":" + totalTime);
 		correctText.setText(getResources().getString(R.string.correct) + ":0");
 	}
 	
@@ -106,17 +103,19 @@ public class HangmanActivity extends Activity {
 			public void onsuccess(String resultStr) {
 				 try {
 					 	hideLoading();
+					 	countlast = 0;					//标志*的数量
 						JSONObject resultJson = new JSONObject(resultStr);
 						if (resultJson != null) {
 							Log.d("hangman", "getNewWord:" + resultJson);
 							JSONObject data = resultJson.optJSONObject("data");
 							String newWord = data.optString("word");
 							triedWord = data.optInt("totalWordCount");
-							restTime -= data.optInt("wrongGuessCountOfCurrentWord");
+							restTime = totalTime - data.optInt("wrongGuessCountOfCurrentWord");
 					        char[] c = newWord.toCharArray();
 					        final ArrayList<GameLetter> letters = new ArrayList<GameLetter>();
 					        for(int i = 0; i < c.length; i++){
 					            letters.add(new GameLetter(c[i]+"", false));
+					            countlast++;
 					        }
 					        runOnUiThread(new Runnable() {
 								public void run() {
@@ -143,8 +142,6 @@ public class HangmanActivity extends Activity {
         for(int i = 0; i < keyboardString.length(); i++){
             Button letterButton = ViewHandler.generateButton(this, Character.toString(keyboardString.charAt(i)));
             
-            //disable sound, to make room for our own effects on button
-            letterButton.setSoundEffectsEnabled(false);
             letterButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                 	makeAGuess(v);
@@ -190,6 +187,7 @@ public class HangmanActivity extends Activity {
 			@Override
 			public void onsuccess(String resultStr) {
 				 try {
+					 	countnow = 0;				//标志猜测一个字母之后，返回的单词中，*的个数
 					 	hideLoading();
 						JSONObject resultJson = new JSONObject(resultStr);
 						if (resultJson != null) {
@@ -197,21 +195,18 @@ public class HangmanActivity extends Activity {
 							JSONObject data = resultJson.optJSONObject("data");
 							String newWord = data.optString("word");
 							triedWord = data.optInt("totalWordCount");
-							restTime =10 - data.optInt("wrongGuessCountOfCurrentWord");
+							restTime = totalTime - data.optInt("wrongGuessCountOfCurrentWord");
 
 					        char[] c = newWord.toCharArray();
 					        final ArrayList<GameLetter> letters = new ArrayList<GameLetter>();
 					        for(int i = 0; i < c.length; i++){
 								//*对应的ASCII表 的值
-					        	if(c[i] != 42 ){
-					        		letterIsR = true;
+					        	if(c[i] == 42 ){
+					        		countnow++;
 					        	}
 					            letters.add(new GameLetter(c[i]+"", false));
 					        }
-
-					        if(!newWord.contains("*")){
-					        	isComplete = true;
-					        }
+					        
 					        runOnUiThread(new Runnable() {
 								public void run() {
 									letterHolder.removeAllViews();
@@ -219,14 +214,16 @@ public class HangmanActivity extends Activity {
 							        triedText.setText(getResources().getString(R.string.tried) + ":" + triedWord);
 							        restText.setText(getResources().getString(R.string.rest) + ":" + restTime);
 							        
-							        if (letterIsR) {
+							        if (countnow != countlast) {		//如果猜的字母正确
+							        	countlast = countnow;
 							        	button.setTextColor(getResources().getColor(R.color.correct));
 									} else {
 										button.setTextColor(getResources().getColor(R.color.wrong));
 										hangedMan.setBackgroundResource(getResources().getIdentifier("hangmanbilde" + (10-restTime), "drawable", getPackageName()));
 									}
 							        
-							        if(isComplete || restTime == 0){
+							        //如果猜词完成，或者机会用完
+							        if( countnow == 0 || restTime == 0){
 							        	getResult();
 							        	for(Button button:invisib){
 							        		button.setEnabled(true);
@@ -271,6 +268,7 @@ public class HangmanActivity extends Activity {
 
 					        runOnUiThread(new Runnable() {
 								public void run() {
+									//更新得分，猜测对的单词数
 									correctText.setText(getResources().getString(R.string.correct) + ":" + correctWordCount);
 									scoreText.setText(score);
 									getANewWord();
@@ -308,7 +306,7 @@ public class HangmanActivity extends Activity {
 							sessionId = resultJson.optString("sessionId");
 							JSONObject data = resultJson.optJSONObject("data");
 							totalWord = data.optInt("numberOfWordsToGuess");
-							restTime = data.optInt("numberOfGuessAllowedForEachWord");
+							totalTime = data.optInt("numberOfGuessAllowedForEachWord");
 							runOnUiThread(new Runnable() {
 								public void run() {
 						        	for(Button button:invisib){
