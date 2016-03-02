@@ -179,7 +179,7 @@ public class HangmanActivity extends Activity {
 	    try {
 			obj.put("sessionId", sessionId);
 			obj.put("action", "guessWord");
-			obj.put("guess", button.getText().toString());
+			obj.put("guess", button.getText().toString().toUpperCase());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}  
